@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Kavvu ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             display: flex;
@@ -95,15 +96,49 @@
         }
 
         function celebrate() {
-            document.body.innerHTML = `
-                <div class="container">
-                    <h1>Yay! See you on the 14th, Kavvu! 🥰</h1>
-                    <img src="us.jpg" alt="Us" style="width:300px; border-radius: 20px;">
-                    <p style="font-size: 1.5rem; color: #d32f2f; margin-top: 20px;"> Hence confirmed, I am your Boyfriend❤️</p>
-                </div>
-            `;
-            document.body.style.backgroundColor = "#ffcdd2";
-        }
+    // 1. Change the page content
+    document.body.innerHTML = `
+        <div class="container">
+            <h1>Yay! See you on the 14th, Kavvu! 🥰</h1>
+            <img src="us.jpg" alt="Us" style="width:300px; border-radius: 20px;">
+            <p style="font-size: 1.5rem; color: #d32f2f; margin-top: 20px;">It's a date! ❤️</p>
+        </div>
+    `;
+    document.body.style.backgroundColor = "#ffcdd2";
+
+    // 2. Fire Confetti from the corners
+    var duration = 5 * 1000; // How long the confetti lasts (5 seconds)
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      
+      // Fire from left corner
+      confetti(Object.assign({}, defaults, { 
+        particleCount, 
+        origin: { x: 0, y: 0.7 },
+        colors: ['#ff0000', '#ff69b4', '#ffffff'] // Red, Pink, White
+      }));
+      
+      // Fire from right corner
+      confetti(Object.assign({}, defaults, { 
+        particleCount, 
+        origin: { x: 1, y: 0.7 },
+        colors: ['#ff0000', '#ff69b4', '#ffffff']
+      }));
+    }, 250);
+}
     </script>
 </body>
 
